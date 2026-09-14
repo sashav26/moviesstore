@@ -47,6 +47,13 @@
             <a class="btn btn-danger"
               href="{% url 'movies.delete_review' id=template_data.movie.id review_id=review.id %}">Delete
 	    </a>
+            
+            {% endif %}
+            {% if review.is_reported %}
+            <a class="card-text">This review has been reported.</a>
+            {% else %}
+            <a class="btn btn-warning" href="{% url 'movies.report_review' id=template_data.movie.id review_id=review.id %}">Report 
+            </a>
             {% endif %}
           </li>
           {% endfor %}
@@ -59,8 +66,8 @@
                 <div class="card-body">
                   <b class="text-start">Create a review
                     </b><br /><br />
-		    <form method="POST" action="{% url 'movies.create_review' id=template_data.movie.id %}">
-	 	    {% csrf_token %}
+                      <form method="POST" action="{% url 'movies.create_review' id=template_data.movie.id %}">
+                      {% csrf_token %}
                     <p>
                       <label for="comment">Comment:</label>
                       <textarea name="comment" required

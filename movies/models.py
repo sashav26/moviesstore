@@ -14,7 +14,17 @@ class Review(models.Model):
     comment = models.CharField(max_length=255)
     date = models.DateTimeField(auto_now_add=True)
     movie = models.ForeignKey(Movie, on_delete = models.CASCADE)
+    is_reported = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):
        	 return str(self.id) + ' - ' + self.movie.name
+
+class Report(models.Model):
+    id = models.AutoField(primary_key=True)
+    date = models.DateTimeField(auto_now_add=True)
+    review = models.ForeignKey(Review, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    def __str__(self):
+        return str(self.id) + ' - ' +  self.review.comment
+
 # Create your models here.
