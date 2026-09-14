@@ -40,21 +40,26 @@
               {{ review.date }}
             </h6>
             <p class="card-text"> {{ review.comment }}</p>
-	    {% if user.is_authenticated and user ==  review.user %}
+            {% if review.is_reported %}
+            <a class="card-text">This review has been reported.</a>
+            {% endif %}
+	    {% if user.is_authenticated %}
+             
+            {% if review.is_reported == False %}
+            <a class="btn btn-warning" href="{% url 'movies.report_review' id=template_data.movie.id review_id=review.id %}">Report 
+            </a>
+            {% endif %}
+            {% if  user ==  review.user %}
             <a class="btn btn-primary"
               href="{% url 'movies.edit_review' id=template_data.movie.id review_id=review.id %}">Edit
             </a>
             <a class="btn btn-danger"
               href="{% url 'movies.delete_review' id=template_data.movie.id review_id=review.id %}">Delete
 	    </a>
+      {% endif %}
             
             {% endif %}
-            {% if review.is_reported %}
-            <a class="card-text">This review has been reported.</a>
-            {% else %}
-            <a class="btn btn-warning" href="{% url 'movies.report_review' id=template_data.movie.id review_id=review.id %}">Report 
-            </a>
-            {% endif %}
+           
           </li>
           {% endfor %}
         </ul>
