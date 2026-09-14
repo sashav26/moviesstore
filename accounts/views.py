@@ -49,7 +49,7 @@ def signup(request):
         form = CustomUserCreationForm(request.POST, error_class=CustomErrorList)
         if form.is_valid():
             form.save()
-            return render(request, 'accounts/login.html',{'template_data': template_data})
+            return redirect('home.index')
         else:
             template_data['form'] = form
             return render(request, 'accounts/signup.html',
