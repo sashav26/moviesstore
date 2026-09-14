@@ -40,7 +40,7 @@ def edit_review(request, id, review_id):
         return redirect('movies.show', id=id)
 
 def report_review(request, id, review_id):
-    if request.method == 'GET':
+    if request.method == 'GET' and request.user != None:
             review = Review.objects.get(id=review_id)
             report = Report()
             report.review = review
